@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Jeu de Combat</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+  </head>
+
+  <body>
+    <header>PoKémoon (pitié nintendo c'est pour rigoler)</header>
+    <div id="game">
+      <section id="monster" class="container">
+        <img
+          style="height: 100px"
+          src="https://c.tenor.com/oeY8e8nh6d0AAAAC/shiny-wartortle-pokemon.gif"
+        />
+        <h2 class="text-end">Monstre ❤️</h2>
+        <div class="healthbar">
+          <div id="monster-health" class="healthbar__value"></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <img
+          style="height: 100px"
+          src="https://pa1.aminoapps.com/6409/6e968a5793078ada47a79809c3e67acd17805dc2_hq.gif"
+        />
+        <h2 class="text-start">Player ❤️</h2>
+        <div class="healthbar">
+          <div id="player-health" class="healthbar__value"></div>
+        </div>
+      </section>
+      <section class="container" id="game-over" style="display: none">
+        <h2>Game Over!</h2>
+        <h3 id="winner-message"></h3>
+        <button id="restart-button">Commencer une nouvelle partie</button>
+      </section>
+      <section id="controls">
+        <button id="attack-button">ATTACK</button>
+        <button id="special-attack-button" disabled>SPECIAL ATTACK</button>
+        <button id="heal-button">SOIN</button>
+        <button id="surrender-button">Abandonner</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul id="log-messages"></ul>
+      </section>
+    </div>
+    <script type="module" src="../main.js"></script>
+    <script src="tp-9.js"></script>
+  </body>
+</html>
