@@ -1,20 +1,21 @@
 // DOM Elements
-const playerHealthBar = document.getElementById("player-health");
-const monsterHealthBar = document.getElementById("monster-health");
-const logMessagesList = document.getElementById("log-messages");
-const gameOverSection = document.getElementById("game-over");
-const winnerMessage = document.getElementById("winner-message");
-const restartButton = document.getElementById("restart-button");
-const attackButton = document.getElementById("attack-button");
-const specialAttackButton = document.getElementById("special-attack-button");
-const healButton = document.getElementById("heal-button");
-const surrenderButton = document.getElementById("surrender-button");
+const playerHealthBar = document.getElementById('player-health');
+const monsterHealthBar = document.getElementById('monster-health');
+const logMessagesList = document.getElementById('log-messages');
+const gameOverSection = document.getElementById('game-over');
+const winnerMessage = document.getElementById('winner-message');
+const restartButton = document.getElementById('restart-button');
+const attackButton = document.getElementById('attack-button');
+const specialAttackButton = document.getElementById('special-attack-button');
+const healButton = document.getElementById('heal-button');
+const surrenderButton = document.getElementById('surrender-button');
 
 let playerHealth = 100;
 let monsterHealth = 100;
 let currentRound = 0;
 let logMessages = [];
 
+// Utility functions
 /**
  * Met à jour les barres de santé du joueur et du monstre.
  * Ajuste la largeur des barres de santé en fonction des points de vie restants,
@@ -24,7 +25,9 @@ let logMessages = [];
  * @global
  * @returns {void} Ne retourne aucune valeur.
  */
-function updateHealthBars() {}
+function updateHealthBars() {
+
+}
 
 /**
  * Ajoute un message de log à l'historique de la bataille.
@@ -37,22 +40,26 @@ function updateHealthBars() {}
  * @param {number} value - La valeur associée à l'action (dégâts ou points de soin).
  * @returns {void} Ne retourne aucune valeur.
  */
-function addLogMessage(who, action, value) {}
+function addLogMessage(who, action, value) {
+
+}
 
 /**
  * Vérifie l'état de santé du joueur et du monstre pour déterminer le gagnant de la partie.
- *
+ * 
  * La fonction évalue la vie restante du joueur et du monstre pour déterminer qui a gagné, perdu ou si c'est un match nul.
  * - Si les points de vie du joueur et du monstre sont tous deux inférieurs ou égaux à 0, la fonction déclare un "match nul".
  * - Si les points de vie du joueur sont inférieurs ou égaux à 0, la fonction déclare que le joueur a perdu.
  * - Si les points de vie du monstre sont inférieurs ou égaux à 0, la fonction déclare que le joueur a gagné.
- *
+ * 
  * La fonction met également à jour l'affichage du message de fin de jeu et la section de fin de jeu en fonction du résultat.
  *
  * @function
  * @returns {void} Ne retourne aucune valeur. Modifie l'interface utilisateur en fonction du résultat du jeu.
  */
-function checkWinner() {}
+function checkWinner() {
+
+}
 
 /**
  * Réinitialise les données et l'interface du jeu pour commencer une nouvelle partie.
@@ -64,7 +71,9 @@ function checkWinner() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function resetGame() {}
+function resetGame() {
+
+}
 
 // Actions
 /**
@@ -79,7 +88,19 @@ function resetGame() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function attackMonster() {}
+const getRandomValue(min, max){
+    return Math.random() * (max - min) + min
+}
+
+function attackMonster() {
+    currentRound++;
+    let attck = getRandomValue(10,15);
+    monsterHealth -= attck;
+    logMessages.append(`Votre attaque a infligé ${attck} de dégat à votre adversaire`);
+    attackPlayer();
+    checkWinner();
+    updateSpecialAttackButton();
+}
 
 /**
  * Gère l'attaque du monstre contre le joueur.
@@ -91,7 +112,13 @@ function attackMonster() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function attackPlayer() {}
+function attackPlayer() {
+    let attck = getRandomValue(10,15);
+    playerHealth -= attck;
+    logMessages.append(`L'adversaire vous a infligé ${attck} de dégat`);
+    checkWinner();
+    updateHealthBars();
+}
 
 /**
  * Gère l'attaque spéciale du joueur contre le monstre.
@@ -105,7 +132,9 @@ function attackPlayer() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function specialAttackMonster() {}
+function specialAttackMonster() {
+
+}
 
 /**
  * Permet au joueur de se soigner.
@@ -119,7 +148,9 @@ function specialAttackMonster() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function healPlayer() {}
+function healPlayer() {
+
+}
 
 /**
  * Permet au joueur d'abandonner la partie.
@@ -129,25 +160,29 @@ function healPlayer() {}
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function surrenderGame() {}
+function surrenderGame() {
+
+}
 
 // Special attack availability
 /**
  * Met à jour l'état du bouton d'attaque spéciale en fonction du nombre de rounds.
- * - Le bouton d'attaque spéciale est activé tous les 3 tours.
+ * - Le bouton d'attaque spéciale est activé tous les 3 tours. 
  * - Si le tour courant n'est pas un multiple de 3, le bouton est désactivé.
  *
  * @function
  * @returns {void} Ne retourne aucune valeur.
  */
-function updateSpecialAttackButton() {}
+function updateSpecialAttackButton() {
+
+}
 
 // Event Listeners
-attackButton.addEventListener("click", attackMonster);
-specialAttackButton.addEventListener("click", specialAttackMonster);
-healButton.addEventListener("click", healPlayer);
-surrenderButton.addEventListener("click", surrenderGame);
-restartButton.addEventListener("click", resetGame);
+attackButton.addEventListener('click', attackMonster);
+specialAttackButton.addEventListener('click', specialAttackMonster);
+healButton.addEventListener('click', healPlayer);
+surrenderButton.addEventListener('click', surrenderGame);
+restartButton.addEventListener('click', resetGame);
 
 // Initialize Game
 resetGame();
