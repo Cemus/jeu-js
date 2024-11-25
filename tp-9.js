@@ -10,6 +10,8 @@ const specialAttackButton = document.getElementById("special-attack-button");
 const healButton = document.getElementById("heal-button");
 const surrenderButton = document.getElementById("surrender-button");
 
+const alertSound = new Audio("./alert.mp3");
+
 let playerHealth = 100;
 let monsterHealth = 100;
 let currentRound = 0;
@@ -44,6 +46,12 @@ function updateHealthBars() {
     }
   } else {
     monsterHealthBar.style.width = `${0}%`;
+  }
+
+  if (playerHealth <= 25) {
+    alertSound.play();
+  } else {
+    alertSound.stop();
   }
 
   const monsterText = document.querySelector("#monster h2");
@@ -165,7 +173,7 @@ function resetGame() {
   monsterHealth = 100;
   currentRound = 0;
   logMessages = [];
-  logMessagesList.innerHTML = "";
+  logMessagesList.innerText = "";
   updateHealthBars();
   winnerMessage.innerText = "";
   gameOverSection.style.display = "none";
