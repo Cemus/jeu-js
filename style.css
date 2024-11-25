@@ -138,3 +138,45 @@ button:disabled {
 .log--heal {
   color: green;
 }
+
+.monster,
+.player {
+  position: relative;
+  top: 0;
+}
+
+.push--monster {
+  animation-name: monsterPush;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+.push--player {
+  animation-name: playerPush;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes monsterPush {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: -10px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@keyframes playerPush {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: 10px;
+  }
+  100% {
+    top: 0px;
+  }
+}

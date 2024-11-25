@@ -10,7 +10,14 @@ const specialAttackButton = document.getElementById("special-attack-button");
 const healButton = document.getElementById("heal-button");
 const surrenderButton = document.getElementById("surrender-button");
 
-const alertSound = new Audio("./alert.mp3");
+const playerSprite = document.getElementsByClassName("player")[0];
+const monsterSprite = document.getElementsByClassName("monster")[0];
+
+// Sounds
+const criticalSound = new Audio("./sounds/critical.mp3");
+const victorySound = new Audio("./sounds/victory.mp3");
+const hitSound = new Audio("./sounds/hit.mp3");
+const healSound = new Audio("./sounds/heal.mp3");
 
 let playerHealth = 100;
 let monsterHealth = 100;
@@ -48,14 +55,19 @@ function updateHealthBars() {
     monsterHealthBar.style.width = `${0}%`;
   }
 
-  if (playerHealth <= 25) {
-    alertSound.play();
+  if (playerHealth <= 25 && playerHealth > 0 && monsterHealth > 0) {
+    criticalSound.play();
   } else {
-    alertSound.stop();
+    stopSound(criticalSound);
   }
 
   const monsterText = document.querySelector("#monster h2");
   monsterText.textContent = monsterHealth <= 0 ? "Monstre 💀" : "Monstre ❤️";
+}
+
+function stopSound(snd) {
+  snd.pause();
+  snd.currentTime = 0;
 }
 
 function addLogMessage(who, action, value) {
@@ -84,10 +96,14 @@ function checkWinner() {
     gameOverSection.style.justifyContent = "center";
     if (playerHealth <= 0 && monsterHealth > playerHealth) {
       winnerMessage.innerText = "PERDU";
+      stopSound(criticalSound);
     } else if (monsterHealth <= 0 && playerHealth > monsterHealth) {
       winnerMessage.innerText = "GAGNÉ";
+      victorySound.play();
+      stopSound(criticalSound);
     } else {
       winnerMessage.innerText = "Match Nul";
+      stopSound(criticalSound);
     }
   }
 }
@@ -98,34 +114,71 @@ const getRandomValue = (min, max) => {
 };
 
 function attackMonster() {
+  if (playerSprite.classList.contains("push--player")) {
+    setTimeout(() => {
+      playerSprite.classList.toggle("push--player");
+    }, 500);
+  }
   currentRound++;
   let attck = getRandomValue(10, 15);
   monsterHealth -= attck;
   addLogMessage("Le joueur", "attck", attck);
-  attackPlayer();
   checkWinner();
   updateSpecialAttackButton();
+  updateHealthBars();
+  hitSound.play();
+  monsterSprite.classList.toggle("push--monster");
+  //Changer le tour
+  disablePlayerCommands();
+  setTimeout(() => {
+    attackPlayer();
+    enablePlayerCommands();
+  }, 1000);
+}
+
+function disablePlayerCommands() {
+  attackButton.disabled = true;
+  healButton.disabled = true;
+  surrenderButton.disabled = true;
+}
+
+function enablePlayerCommands() {
+  attackButton.disabled = false;
+  healButton.disabled = false;
+  surrenderButton.disabled = false;
 }
 
 function attackPlayer() {
+  if (monsterSprite.classList.contains("push--monster")) {
+    monsterSprite.classList.toggle("push--monster");
+  }
   let attck = getRandomValue(10, 25);
   playerHealth -= attck;
   addLogMessage("Le monstre", "attck", attck);
   checkWinner();
   updateHealthBars();
+  hitSound.play();
+  playerSprite.classList.toggle("push--player");
 }
 
 function specialAttackMonster() {
+  monsterSprite.classList.toggle("push--monster");
   currentRound += 1;
   let attck = Math.floor(getRandomValue(20, 25));
   monsterHealth -= attck;
   addLogMessage("Le joueur", "special", attck);
-  attackPlayer();
+
   checkWinner();
   updateHealthBars();
-  lastUse = 3;
-
   updateSpecialAttackButton();
+
+  //Changer le tour
+  disablePlayerCommands();
+  lastUse = 3;
+  setTimeout(() => {
+    attackPlayer();
+    enablePlayerCommands();
+  }, 1000);
 }
 function healPlayer() {
   // Augmente le compteur de rounds
@@ -139,18 +192,20 @@ function healPlayer() {
 
   // Ajoute un message de log pour le soin
   addLogMessage("Le joueur", "heal", healValue);
-
-  // Le monstre attaque immédiatement après
-  attackPlayer();
-
-  // Met à jour les barres de santé
-  updateHealthBars();
-
-  // Vérifie s'il y a un gagnant
-  checkWinner();
-
+  // Joue le son
+  healSound.play();
   // Met à jour l'état du bouton d'attaque spéciale (si nécessaire)
   updateSpecialAttackButton();
+  // Met à jour les barres de santé
+  updateHealthBars();
+  // Empêche le joueur de rejouer immédiatement
+  disablePlayerCommands();
+  // Changer le tour
+  setTimeout(() => {
+    // Le monstre attaque après
+    attackPlayer();
+    enablePlayerCommands();
+  }, 1000);
 }
 function updateSpecialAttackButton() {
   if (lastUse == 0) {
@@ -166,6 +221,7 @@ function surrenderGame() {
   winnerMessage.textContent = "PERDU";
   gameOverSection.style.display = "flex";
   gameOverSection.style.justifyContent = "center";
+  stopSound(criticalSound);
 }
 
 function resetGame() {
@@ -179,6 +235,7 @@ function resetGame() {
   gameOverSection.style.display = "none";
   lastUse = 3;
   updateSpecialAttackButton();
+  stopSound(victorySound);
 }
 
 // Event Listeners
