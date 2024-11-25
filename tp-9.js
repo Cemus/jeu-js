@@ -140,12 +140,14 @@ function disablePlayerCommands() {
   attackButton.disabled = true;
   healButton.disabled = true;
   surrenderButton.disabled = true;
+  specialAttackButton.disable = true;
 }
 
 function enablePlayerCommands() {
   attackButton.disabled = false;
   healButton.disabled = false;
   surrenderButton.disabled = false;
+  specialAttackButton.disable = false;
 }
 
 function attackPlayer() {
