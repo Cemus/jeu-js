@@ -151,7 +151,6 @@ function surrenderGame() {
   winnerMessage.textContent = "PERDU";
   gameOverSection.style.display = "flex";
   gameOverSection.style.justifyContent = "center";
-  resetGame();
 }
 
 function resetGame() {
