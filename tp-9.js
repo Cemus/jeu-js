@@ -30,6 +30,9 @@ function updateHealthBars() {
     playerHealthBar.style.width = `${0}%`;
   }
 
+  const playerText = document.querySelector("#player h2");
+  playerText.textContent = playerHealth <= 0 ? "Player 💀" : "Player ❤️";
+
   if (monsterHealth >= 0) {
     monsterHealthBar.style.width = `${monsterHealth}%`;
     if (monsterHealth >= 50) {
@@ -42,7 +45,11 @@ function updateHealthBars() {
   } else {
     monsterHealthBar.style.width = `${0}%`;
   }
+
+  const monsterText = document.querySelector("#monster h2");
+  monsterText.textContent = monsterHealth <= 0 ? "Monstre 💀" : "Monstre ❤️";
 }
+
 function addLogMessage(who, action, value) {
   let message = "";
 
@@ -93,7 +100,7 @@ function attackMonster() {
 }
 
 function attackPlayer() {
-  let attck = getRandomValue(10, 15);
+  let attck = getRandomValue(10, 25);
   playerHealth -= attck;
   addLogMessage("Le monstre", "attck", attck);
   checkWinner();
