@@ -181,6 +181,11 @@ function specialAttackMonster() {
   }, 1000);
 }
 function healPlayer() {
+  if (playerSprite.classList.contains("push--player")) {
+    setTimeout(() => {
+      playerSprite.classList.toggle("push--player");
+    }, 500);
+  }
   // Augmente le compteur de rounds
   currentRound++;
 
