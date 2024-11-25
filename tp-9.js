@@ -124,7 +124,7 @@ function healPlayer() {
   currentRound++;
 
   // Calcule un soin aléatoire (par exemple entre 15 et 25 points de vie)
-  const healValue = Math.floor(Math.random() * (25 - 15 + 1)) + 15;
+  const healValue = Math.floor(Math.random() * (25 - 15) + 15);
 
   // Augmente la santé du joueur, sans dépasser la valeur de 100
   playerHealth = Math.min(playerHealth + healValue, 100);
@@ -165,9 +165,9 @@ function resetGame() {
   monsterHealth = 100;
   currentRound = 0;
   logMessages = [];
+  logMessagesList.innerHTML = "";
   updateHealthBars();
   winnerMessage.innerText = "";
-  logMessagesList.innerHTML = "";
   gameOverSection.style.display = "none";
   lastUse = 3;
   updateSpecialAttackButton();
