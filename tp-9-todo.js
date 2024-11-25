@@ -15,7 +15,6 @@ let monsterHealth = 100;
 let currentRound = 0;
 let logMessages = [];
 
-// Utility functions
 /**
  * Met à jour les barres de santé du joueur et du monstre.
  * Ajuste la largeur des barres de santé en fonction des points de vie restants,
