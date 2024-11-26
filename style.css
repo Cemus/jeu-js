@@ -146,7 +146,7 @@ button:disabled {
 .player {
   position: relative;
   top: 0;
-  height: 72px;
+  height: 100px;
 }
 
 .push--monster {
