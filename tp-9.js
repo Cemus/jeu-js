@@ -9,6 +9,7 @@ const attackButton = document.getElementById("attack-button");
 const specialAttackButton = document.getElementById("special-attack-button");
 const healButton = document.getElementById("heal-button");
 const surrenderButton = document.getElementById("surrender-button");
+const controls = document.getElementById("controls");
 
 const playerSprite = document.getElementsByClassName("player")[0];
 const monsterSprite = document.getElementsByClassName("monster")[0];
@@ -87,7 +88,7 @@ function addLogMessage(who, action, value) {
   console.log("message", message);
   const p = document.createElement("p");
   p.textContent = message;
-  logMessagesList.append(p);
+  logMessagesList.insertBefore(p, logMessagesList.firstChild);
 }
 
 function checkWinner() {
@@ -105,6 +106,7 @@ function checkWinner() {
       winnerMessage.innerText = "Match Nul";
       stopSound(criticalSound);
     }
+    controls.style.display = "none";
   }
 }
 checkWinner(playerHealth, monsterHealth);
@@ -229,6 +231,7 @@ function surrenderGame() {
   gameOverSection.style.display = "flex";
   gameOverSection.style.justifyContent = "center";
   stopSound(criticalSound);
+  controls.style.display = "none";
 }
 
 function resetGame() {
@@ -243,6 +246,7 @@ function resetGame() {
   lastUse = 3;
   updateSpecialAttackButton();
   stopSound(victorySound);
+  controls.style.display = "flex";
 }
 
 // Event Listeners
